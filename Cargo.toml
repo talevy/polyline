@@ -1,0 +1,11 @@
+[package]
+
+name = "polyline"
+version = "0.0.1"
+authors = ["Tal Levy <tal@fastmail.com>"]
+
+[lib]
+name = "polyline"
+
+[dependencies]
+bit-vec = "*"
