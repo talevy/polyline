@@ -22,7 +22,7 @@ impl fmt::Debug for Point {
 }
 
 impl Point {
-    fn new(x: f64, y: f64) -> Self {
+    pub fn new(x: f64, y: f64) -> Self {
         Point { x: x, y: y }
     }
 
@@ -89,15 +89,15 @@ impl FromIterator<Point> for Polyline {
 }
 
 impl Polyline {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Polyline { points: Vec::new() }
     }
 
-	fn from_vec(vec: Vec<Point>) -> Self {
+	pub fn from_vec(vec: Vec<Point>) -> Self {
         Polyline { points: vec }
     }
 
-    fn len(&self) -> usize {
+    pub fn len(&self) -> usize {
         self.points.len()
     }
 
@@ -163,7 +163,7 @@ impl Polyline {
             .collect()
     }
 
-    fn simplify(&self, tolerance: f64, highest_quality: bool) -> Polyline {
+    pub fn simplify(&self, tolerance: f64, highest_quality: bool) -> Polyline {
         if self.points.len() <= 2 {
             return self.clone();
         }
