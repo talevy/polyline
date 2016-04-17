@@ -10,8 +10,8 @@ use bit_vec::BitVec;
 
 #[derive(PartialEq, Clone, Copy)]
 pub struct Point {
-    x: f64,
-    y: f64
+    pub x: f64,
+    pub y: f64
 }
 
 impl fmt::Debug for Point {
@@ -53,7 +53,7 @@ impl Point {
 
 #[derive(PartialEq, Clone)]
 pub struct Polyline {
-    points: Vec<Point>
+    pub points: Vec<Point>
 }
 
 impl Deref for Polyline {
