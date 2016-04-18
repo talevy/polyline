@@ -2,9 +2,7 @@
 
 extern crate bit_vec;
 
-use std::fmt;
 use std::iter::FromIterator;
-use std::ops::Deref;
 
 use bit_vec::BitVec;
 
@@ -12,13 +10,6 @@ use bit_vec::BitVec;
 pub struct Point {
     pub x: f64,
     pub y: f64
-}
-
-impl fmt::Debug for Point {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        write!(fmt, "({},{})", self.x, self.y);
-        Ok(())
-    }
 }
 
 impl Point {
@@ -54,28 +45,6 @@ impl Point {
 #[derive(PartialEq, Clone)]
 pub struct Polyline {
     pub points: Vec<Point>
-}
-
-impl Deref for Polyline {
-    type Target = Vec<Point>;
-
-    fn deref(&self) -> &Vec<Point> {
-        &self.points
-    }
-}
-
-impl fmt::Debug for Polyline {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        write!(fmt, "[");
-        for (i, p) in self.points.iter().enumerate() {
-            write!(fmt, "{:?}", p);
-            if i < self.points.len() - 1 {
-                write!(fmt, ",");
-            }
-        }
-        write!(fmt, "]");
-        Ok(())
-    }
 }
 
 impl FromIterator<Point> for Polyline {
@@ -179,6 +148,27 @@ impl Polyline {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fmt;
+
+    impl fmt::Debug for Point {
+        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+            write!(fmt, "({},{})", self.x, self.y);
+            Ok(())
+        }
+    }
+    impl fmt::Debug for Polyline {
+        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+            write!(fmt, "[");
+            for (i, p) in self.points.iter().enumerate() {
+                write!(fmt, "{:?}", p);
+                if i < self.points.len() - 1 {
+                    write!(fmt, ",");
+                }
+            }
+            write!(fmt, "]");
+            Ok(())
+        }
+    }
 
     #[test]
     fn does_nothing_with_two() {
