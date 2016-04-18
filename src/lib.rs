@@ -106,8 +106,8 @@ impl Polyline {
     }
 
     fn simplify_radial_dist(&self, sq_tolerance: f64) -> Self {
-        self.points.iter()
-            .zip(self.points.iter())
+        self.points.iter().take(self.points.len()-1)
+            .zip(self.points.iter().skip(1))
             .filter(|&(pre, cur)| {
                 let dx = pre.x - cur.y;
                 let dy = pre.y - cur.y;
@@ -126,7 +126,6 @@ impl Polyline {
 
         while !stack.is_empty() {
             let (start_idx, end_idx) = stack.pop().unwrap();
-            println!("{},{}", start_idx, end_idx);
 
             let mut dmax: f64 = 0.0f64;
             let mut max_idx: usize = start_idx;
@@ -153,8 +152,6 @@ impl Polyline {
                 }
             }
         }
-
-        println!("{:?}", keep_elem_vec);
 
         self.points.iter()
             .enumerate()
