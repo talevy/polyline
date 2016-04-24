@@ -136,11 +136,33 @@ impl Polyline {
 
         let sq_tolerance = tolerance.powi(2);
 
-        if highest_quality {
+        // TODO(talevy): figure out right thing to do here
+        // skipping this value for now since it doesn't seem to help
+        let poly = if highest_quality {
             self.clone()
         } else {
             self.simplify_radial_dist(sq_tolerance)
-        }.simplify_douglas_peucker(sq_tolerance)
+        }.simplify_douglas_peucker(sq_tolerance);
+
+        // TODO(talevy): port this simplification algorithm 
+        // out into its own method
+        let mut keep = Vec::with_capacity(self.points.len());
+        let mut it = self.points.iter();
+        let mut q = it.next().unwrap();
+        keep.push(q.clone());
+
+        for p in it {
+            let dx = p.x - q.x;
+            let dy = p.y - q.y;
+            let d = (dx * dx + dy * dy);
+
+            if d > 0.000009 {
+                keep.push(p.clone());
+                q = p;
+            }
+        }
+
+        Polyline::from_vec(keep)
     }
 }
 
